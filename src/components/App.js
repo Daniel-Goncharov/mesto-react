@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../pages/index.css';
 import Header from './Header';
 import Main from './Main';
@@ -7,83 +7,50 @@ import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
 
 function App() {
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
+  const [isImagePopupOpen, setIsImagePopupOpen] = useState(false);
+  const [selectedCard, setSelectedCard] = useState({});
+
   function handleEditAvatarClick() {
-    setIsOpen({
-      ...isOpen,
-      isEditAvatarPopupOpen: true
-    });
+    setIsEditAvatarPopupOpen(true);
   }
-
   function handleEditProfileClick() {
-    setIsOpen({
-      ...isOpen,
-      isEditProfilePopupOpen: true
-    });
+    setIsEditProfilePopupOpen(true);
   }
-
   function handleAddPlaceClick() {
-    setIsOpen({
-      ...isOpen,
-      isAddPlacePopupOpen: true
-    });
+    setIsAddPlacePopupOpen(true);
   }
-
-  function handleCardClick(link, name) {
-    setSelectedCard({
-      isOpen: true,
-      link: link,
-      name: name,
-    });
+  function handleCardClick(card) {
+    setSelectedCard(card);
+    setIsImagePopupOpen(true);
   }
-
-  function closeAllPopups(e) {
-    if (e.target.classList.contains('popup')
-      || e.target.classList.contains('popup__closed-button')) {
-
-      setIsOpen({
-        isEditProfilePopupOpen: false,
-        isAddPlacePopupOpen: false,
-        isEditAvatarPopupOpen: false
-      })
-
-      setSelectedCard({
-        link: '',
-        name: '',
-        isOpen: false,
-      });
-    }
+  function closeAllPopups() {
+    setIsEditAvatarPopupOpen(false);
+    setIsEditProfilePopupOpen(false);
+    setIsAddPlacePopupOpen(false);
+    setIsImagePopupOpen(false);
+    setSelectedCard({});
   }
-
-  const [isOpen, setIsOpen] = React.useState({
-    isEditProfilePopupOpen: false,
-    isAddPlacePopupOpen: false,
-    isEditAvatarPopupOpen: false
-  })
-
-  const [selectedCard, setSelectedCard] = React.useState({
-    isOpen: false,
-    link: null
-  });
 
   return (
     <div className="page">
       <Header />
       <Main
+        onHandleCardClick={handleCardClick}
         onEditAvatar={handleEditAvatarClick}
-        onAddPlace={handleAddPlaceClick}
         onEditProfile={handleEditProfileClick}
-        onCardClick={handleCardClick}
-        selectedCard={selectedCard}
+        onAddPlace={handleAddPlaceClick}
       />
       <PopupWithForm
         title="Редактировать профиль"
-        type="profile"
+        name="profile"
         buttonText="Сохранить"
-        isOpen={isOpen.isEditProfilePopupOpen}
+        isOpen={isEditProfilePopupOpen}
         onClose={closeAllPopups}
       >
-        <>
-          <input
+        <input
           className="popup__input popup__input_data_name"
           id="name-imput"
           type="text"
@@ -91,11 +58,10 @@ function App() {
           placeholder="Имя"
           required
           minLength="2"
-          maxLength="40" />
-          <span className="popup__error name-imput-error" ></span>
-        </>
-        <>
-          <input
+          maxLength="40"
+        />
+        <span className="popup__error name-imput-error" ></span>
+        <input
           className="popup__input popup__input_data_job"
           id="job-imput"
           type="text"
@@ -103,66 +69,65 @@ function App() {
           placeholder="О себе"
           required
           minLength="2"
-          maxLength="200" />
-          <span className="popup__error job-imput-error" ></span>
-        </>
+          maxLength="200"
+        />
+        <span className="popup__error job-imput-error" ></span>
       </PopupWithForm>
       <PopupWithForm
         title="Новое место"
-        type="card"
+        name="card"
         buttonText="Сохранить"
-        isOpen={isOpen.isAddPlacePopupOpen}
+        isOpen={isAddPlacePopupOpen}
         onClose={closeAllPopups}
       >
-        <>
-          <input
-            className="popup__input popup__input_data_place-name"
-            id="placeName-input"
-            type="text"
-            name="name"
-            placeholder="Название"
-            required
-            minLength="2"
-            maxLength="30" />
-          <span className="popup__error placeName-input-error" ></span>
-        </>
-        <>
-          <input
-            className="popup__input popup__input_data_place-url"
-            id="placeUrl-input"
-            type="url"
-            name="link"
-            placeholder="Ссылка на картинку"
-            required />
-          <span className="popup__error placeUrl-input-error" ></span>
-        </>
+        <input
+          className="popup__input popup__input_data_place-name"
+          id="placeName-input"
+          type="text"
+          name="name"
+          placeholder="Название"
+          required
+          minLength="2"
+          maxLength="30"
+        />
+        <span className="popup__error placeName-input-error" ></span>
+        <input
+          className="popup__input popup__input_data_place-url"
+          id="placeUrl-input"
+          type="url"
+          name="link"
+          placeholder="Ссылка на картинку"
+          required
+        />
+        <span className="popup__error placeUrl-input-error" ></span>
       </PopupWithForm>
       <PopupWithForm
         title="Обновить аватар"
-        type="avatar"
+        name="avatar"
         buttonText="Сохранить"
-        isOpen={isOpen.isEditAvatarPopupOpen}
+        isOpen={isEditAvatarPopupOpen}
         onClose={closeAllPopups}
       >
-        <>
-          <input
-            className="popup__input popup__input_data_place-url"
-            id="avatar-input"
-            type="url"
-            name="avatar-url"
-            placeholder="Укажите ссылку на аватар"
-            required />
-          <span className="popup__error avatar-input-error" ></span>
-        </>
+        <input
+          className="popup__input popup__input_data_place-url"
+          id="avatar-input"
+          type="url"
+          name="avatar-url"
+          placeholder="Укажите ссылку на аватар"
+          required />
+        <span className="popup__error avatar-input-error" ></span>
       </PopupWithForm>
       <PopupWithForm
         title="Вы уверены?"
-        type="confirmation"
+        name="confirmation"
         buttonText="Да"
       >
-        <input type="hidden" name="item-id" value=""/>
       </PopupWithForm>
-      <ImagePopup onClose={closeAllPopups} card={selectedCard} />
+      <ImagePopup
+        isOpen={isImagePopupOpen}
+        onClose={closeAllPopups}
+        card={selectedCard}
+      />
       <Footer />
     </div>
   );

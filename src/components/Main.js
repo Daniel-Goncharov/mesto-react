@@ -1,23 +1,23 @@
-import React from 'react';
-import avatarDefault from '../images/Kusto.jpg'
-import PopupWithForm from './PopupWithForm';
-import ImagePopup from './ImagePopup';
+import React, { useState, useEffect } from 'react';
+import avatarDefault from '../images/Kusto.jpg';
 import Card from './Card';
 import api from '../utils/api';
 
 export default function Main(props) {
-  const [userName, setUserName] = React.useState('Жак-Ив Кусто');
-  const [userDescription, setUserDescription] = React.useState('Исследователь океана');
-  const [userAvatar, setUserAvatar] = React.useState(false);
+  const [userId, setUserId] = useState(null);
+  const [userName, setUserName] = useState('Жак-Ив Кусто');
+  const [userDescription, setUserDescription] = useState('Исследователь океана');
+  const [userAvatar, setUserAvatar] = useState(false);
 
-  const [userInfo, setUserInfo] = React.useState({
+  const [userInfo, setUserInfo] = useState({
     userName: 'Жак-Ив Кусто',
     userDescription: 'Исследователь океана',
-    userAvatar: false,
+    userAvatar: '',
   });
-  const [cards, setCards] = React.useState([]);
+  const [cards, setCards] = useState([]);
+  const handleCardClick = props.onHandleCardClick;
 
-  React.useEffect(() => {
+  useEffect(() => {
     api.getUserInfo()
       .then(userInfo => {
         setUserInfo({
@@ -26,11 +26,18 @@ export default function Main(props) {
           userAvatar: userInfo.avatar
         });
       })
+      .catch((err) => {
+        alert(err);
+      });
   },[])
 
-  React.useEffect(() => {
+  useEffect(() => {
     api.getInitialCards()
-      .then(cards => setCards([...cards]))
+      .then(cards => setCards([...cards]
+        ))
+      .catch((err) => {
+        alert(err);
+      });
   },[])
 
   return (
@@ -51,9 +58,17 @@ export default function Main(props) {
       </section>
       <section className="elements">
         <ul className="elements__container">
-          {cards.map(card => {
-            return <Card key={card._id} card={card} onCardClick={props.onCardClick} />
-          })}
+        {cards.map(card => {
+          return (
+            <Card
+              key={card._id}
+              userId={userId}
+              onCardClick={handleCardClick}
+              card={card}
+              {...card}
+            />
+          );
+        })}
         </ul>
       </section>
     </main>
