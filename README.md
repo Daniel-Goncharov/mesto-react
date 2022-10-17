@@ -11,4 +11,4 @@
 * ReactJS
 * Аадаптивная верстка (сайнт адаптирован под разрешения 320px - 1280px+)
 
-ссылка на проект в github-pages: пока не доступно
+ссылка на проект в github-pages: https://daniel-goncharov.github.io/mesto-react/
