@@ -9,7 +9,7 @@ export default function ImagePopup({ isOpen, onClose, card }) {
           type="button"
           aria-label="Закрыть просмотр изображения"
           onClick={onClose}
-          />
+        />
           <img className="popup__picture" src={card.link} alt={card.name} />
           <h3 className="popup__picture-title">{card.name}</h3>
         </div>

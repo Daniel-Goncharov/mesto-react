@@ -21,13 +21,13 @@ class Api {
   }
 
   // метод отправляющий на сервер новые данные профиля пользователя
-  changeUserInfo({ name, about }) {
+  setUserInfoApi(userData) {
     return fetch(`${this._baseUrl}users/me`, {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
-        name: name,
-        about: about,
+        name: userData.name,
+        about: userData.about,
       }),
     }).then(this._checkResponse);
   }
@@ -71,18 +71,10 @@ class Api {
     }).then(this._checkResponse);
   }
 
-  // метод отправляющий на сервер лайк карточке
-  addLikeToCard(cardId) {
+  // метод отправляющий на сервер информацио о постановке или снялии лайка
+  changeLikeCardStatus(cardId, isLiked) {
     return fetch(`${this._baseUrl}cards/${cardId}/likes`, {
-      method: 'PUT',
-      headers: this._headers,
-    }).then(this._checkResponse);
-  }
-
-  // метод удаляющий с сервера лайк карточки
-  deleteLikeFromCard(cardId) {
-    return fetch(`${this._baseUrl}cards/${cardId}/likes`, {
-      method: 'DELETE',
+      method: `${isLiked ? 'PUT' : 'DELETE'}`,
       headers: this._headers,
     }).then(this._checkResponse);
   }
