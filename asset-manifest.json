@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/mesto-react/static/css/main.81bce536.css",
-    "main.js": "/mesto-react/static/js/main.c2386e6c.js",
+    "main.css": "/mesto-react/static/css/main.c6516a2f.css",
+    "main.js": "/mesto-react/static/js/main.30abebfa.js",
     "static/js/787.5530211c.chunk.js": "/mesto-react/static/js/787.5530211c.chunk.js",
     "static/media/Inter-Medium.woff": "/mesto-react/static/media/Inter-Medium.44e343ff76a98508d309.woff",
     "static/media/Inter-Black.woff": "/mesto-react/static/media/Inter-Black.87c06fd2ac7128c9a81d.woff",
@@ -9,7 +9,6 @@
     "static/media/Inter-Medium.woff2": "/mesto-react/static/media/Inter-Medium.01f03178adde434fc9fa.woff2",
     "static/media/Inter-Black.woff2": "/mesto-react/static/media/Inter-Black.ed17840f58cc8c61635a.woff2",
     "static/media/Inter-Regular.woff2": "/mesto-react/static/media/Inter-Regular.bd097ceff83f90802a12.woff2",
-    "static/media/Kusto.jpg": "/mesto-react/static/media/Kusto.fe68fd0a559940cc2c4d.jpg",
     "static/media/logo.svg": "/mesto-react/static/media/logo.bbe2a6eafac19c3d031c.svg",
     "static/media/Like-Button-Disabled.svg": "/mesto-react/static/media/Like-Button-Disabled.1ad06e85f169668a1f36.svg",
     "index.html": "/mesto-react/index.html",
@@ -20,12 +19,12 @@
     "static/media/edit-pen-Button.svg": "/mesto-react/static/media/edit-pen-Button.a086f758840ae814ecde.svg",
     "static/media/Add-Button-big.svg": "/mesto-react/static/media/Add-Button-big.bed8c136e13907f5eefb.svg",
     "static/media/Add-Button-small.svg": "/mesto-react/static/media/Add-Button-small.d5d6f8af0577b9c95ee4.svg",
-    "main.81bce536.css.map": "/mesto-react/static/css/main.81bce536.css.map",
-    "main.c2386e6c.js.map": "/mesto-react/static/js/main.c2386e6c.js.map",
+    "main.c6516a2f.css.map": "/mesto-react/static/css/main.c6516a2f.css.map",
+    "main.30abebfa.js.map": "/mesto-react/static/js/main.30abebfa.js.map",
     "787.5530211c.chunk.js.map": "/mesto-react/static/js/787.5530211c.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.81bce536.css",
-    "static/js/main.c2386e6c.js"
+    "static/css/main.c6516a2f.css",
+    "static/js/main.30abebfa.js"
   ]
 }
