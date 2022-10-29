@@ -24,13 +24,13 @@ export default function Main({onEditAvatar, onEditProfile, onAddPlace, onCardCli
       <section className="elements">
         <ul className="elements__container">
         {
-            cards.map((card) =>
+            cards.map((card) => (
             <Card key={card._id}
               card={card}
               onCardClick={onCardClick}
               onCardLike={handleCardLike}
               onCardDelete={onCardDelete}
-            />)
+            />))
         }
         </ul>
       </section>

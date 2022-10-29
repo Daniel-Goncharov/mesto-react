@@ -1,16 +1,16 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import PopupWithForm from './PopupWithForm'
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 export default function EditProfilePopup(props) {
-  const [name, setName] = React.useState('')
+  const [name, setName] = useState('')
   const [description, setDescription] = React.useState('')
-  const currentUser = React.useContext(CurrentUserContext)
+  const currentUser = useContext(CurrentUserContext)
 
   useEffect(() => {
     setName(currentUser.name)
     setDescription(currentUser.about)
-  }, [currentUser])
+  }, [currentUser, props.isOpen])
 
   function handleNameChange(e) {
     setName(e.target.value)
@@ -47,7 +47,7 @@ export default function EditProfilePopup(props) {
         minLength="2"
         maxLength="40"
         pattern="^[a-zA-Zа-яА-я-\s]+$"
-        defaultValue={name}
+        value={name || ''}
         onChange={handleNameChange}
       />
       <span className="popup__error name-imput-error" ></span>
@@ -61,7 +61,7 @@ export default function EditProfilePopup(props) {
         minLength="2"
         maxLength="200"
         pattern="^[a-zA-Zа-яА-я-\s]+$"
-        defaultValue={description}
+        value={description || ''}
         onChange={handleDescriptionChange}
       />
       <span className="popup__error job-imput-error" ></span>

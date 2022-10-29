@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
@@ -47,6 +47,20 @@ export default function App() {
     setSelectedCard({});
   }
 
+  function handleEsc(evt) {
+    if (evt.key === 'Escape') {
+      closeAllPopups()
+    }
+  }
+
+  useEffect(() => {
+    window.addEventListener('keydown', handleEsc);
+
+    return () => {
+      window.removeEventListener('keydown', handleEsc);
+    };
+  });
+
   function onUpdateUser(userData) {
     api.setUserInfoApi(userData)
       .then((data) => {
@@ -92,21 +106,14 @@ export default function App() {
       .catch((err) => console.log(err))
   }
 
-  React.useEffect(() => {
-    api.getInitialCards()
-      .then((data) => {
-        setCards(data)
+  useEffect(() => {
+    Promise.all([api.getUserInfo(), api.getInitialCards()])
+      .then(([initialUserInfo, initialCards]) => {
+        setCurrentUser(initialUserInfo);
+        setCards(initialCards);
       })
-      .catch((err) => console.log(err))
-  }, [])
-
-  React.useEffect(() => {
-    api.getUserInfo()
-      .then((data) => {
-        setCurrentUser(data)
-      })
-      .catch((err) => console.log(err))
-  }, [])
+      .catch(err => console.log(err));
+  }, []);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>

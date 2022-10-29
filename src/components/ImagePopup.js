@@ -13,6 +13,7 @@ export default function ImagePopup({ isOpen, onClose, card }) {
           <img className="popup__picture" src={card.link} alt={card.name} />
           <h3 className="popup__picture-title">{card.name}</h3>
         </div>
+        <div className="popup__overlay" onClick={onClose}/>
       </div>
   );
 }

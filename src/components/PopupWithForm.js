@@ -11,13 +11,13 @@ export default function PopupWithForm({ name, isOpen, onClose, title, children, 
         <form
           className={`popup__form popup__form_type_${name}`}
           name={name} method="post"
-          noValidate
           onSubmit={onSubmit}
         >
           {children}
           <button className="popup__button" type="submit">{buttonText}</button>
         </form>
       </div>
+      <div className="popup__overlay" onClick={onClose}/>
     </div>
   )
 }
