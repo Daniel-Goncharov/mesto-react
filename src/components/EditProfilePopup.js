@@ -4,41 +4,97 @@ import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 export default function EditProfilePopup(props) {
   const [name, setName] = useState('')
-  const [description, setDescription] = React.useState('')
   const currentUser = useContext(CurrentUserContext)
+  const [nameError, setNameError] = useState({
+    classInput: '',
+    classError: '',
+    errorMessage: ''
+  })
+  const [description, setDescription] = useState('')
+  const [descriptionError, setDescriptionError] = useState({
+    classInput: '',
+    classError: '',
+    errorMessage: ''
+  })
+  const [isFormValid, setIsFormValid] = useState(true);
 
   useEffect(() => {
     setName(currentUser.name)
     setDescription(currentUser.about)
+    setIsFormValid(true);
+    setNameError({
+      classInput: '',
+      classError: '',
+      errorMessage: ''
+    });
+    setDescriptionError({
+      classInput: '',
+      classError: '',
+      errorMessage: ''
+    });
   }, [currentUser, props.isOpen])
 
-  function handleNameChange(e) {
-    setName(e.target.value)
+  function handleNameChange(evt) {
+    setName(evt.target.value)
+
+    if (!evt.target.validity.valid) {
+      setNameError({
+        classInput: 'popup__input_type_error',
+        classError: 'popup__error_visible',
+        errorMessage: evt.target.validationMessage
+      });
+      setIsFormValid(false);
+    } else {
+      setNameError({
+        classInput: '',
+        classError: '',
+        errorMessage: ''
+      });
+      setIsFormValid(true);
+    }
   }
 
-  function handleDescriptionChange(e) {
-    setDescription(e.target.value)
+  function handleDescriptionChange(evt) {
+    setDescription(evt.target.value)
+
+    if (!evt.target.validity.valid) {
+      setDescriptionError({
+        classInput: 'popup__input_type_error',
+        classError: 'popup__error_visible',
+        errorMessage: evt.target.validationMessage
+      });
+      setIsFormValid(false);
+    } else {
+      setDescriptionError({
+        classInput: '',
+        classError: '',
+        errorMessage: ''
+      });
+      setIsFormValid(true);
+    }
   }
 
-  function handleSubmit(e) {
-    e.preventDefault()
+  function handleSubmit(evt) {
+    evt.preventDefault()
     props.onUpdateUser({
       name: name,
       about: description,
     })
+    setIsFormValid(true);
   }
 
   return (
     <PopupWithForm
       title="Редактировать профиль"
       name="profile"
-      buttonText="Сохранить"
+      buttonText={props.isPopupLoading ? 'Сохранение...' : 'Сохранить'}
       isOpen={props.isOpen}
       onClose={props.onClose}
       onSubmit={handleSubmit}
+      isDisabled={!isFormValid}
     >
       <input
-        className="popup__input popup__input_data_name"
+        className={`popup__input popup__input_data_name ${nameError.classInput}`}
         id="name-imput"
         type="text"
         name="name"
@@ -50,9 +106,9 @@ export default function EditProfilePopup(props) {
         value={name || ''}
         onChange={handleNameChange}
       />
-      <span className="popup__error name-imput-error" ></span>
+      <span className={`popup__error ${nameError.classError}`} >{nameError.errorMessage}</span>
       <input
-        className="popup__input popup__input_data_job"
+        className={`popup__input popup__input_data_job ${descriptionError.classInput}`}
         id="job-imput"
         type="text"
         name="job"
@@ -64,7 +120,7 @@ export default function EditProfilePopup(props) {
         value={description || ''}
         onChange={handleDescriptionChange}
       />
-      <span className="popup__error job-imput-error" ></span>
+      <span className={`popup__error ${descriptionError.classError}`} >{descriptionError.errorMessage}</span>
     </PopupWithForm>
   )
 }

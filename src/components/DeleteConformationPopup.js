@@ -12,7 +12,7 @@ export default function DeleteConformationPopup(props) {
     <PopupWithForm
       title="Вы уверены?"
       name="confirmation"
-      buttonText="Да"
+      buttonText={props.isPopupLoading ? 'Удаление...' : 'Да'}
       isOpen={props.isOpen}
       onClose={props.onClose}
       onSubmit={handleCardDelete}
